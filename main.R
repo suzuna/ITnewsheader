@@ -1,0 +1,31 @@
+library(tidyverse)
+library(lubridate)
+library(rvest)
+library(httr)
+
+USER_AGENT <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
+
+# 2021年5月8日 -> "2021-05-08"(date)
+# as.Date(format=...)は、leading spaceのないmonth（例：5月）をパースできない
+parse_date2 <- function(str){
+  y <- str_extract(str,"[0-9]+(?=年)")
+  m <- str_pad(str_extract(str,"[0-9]+(?=月)"),width=2,side="left",pad="0")
+  d <- str_pad(str_extract(str,"[0-9]+(?=日)"),width=2,side="left",pad="0")
+  as.Date(str_c(y,m,d),format="%Y%m%d")
+}
+
+# https://www.itmedia.co.jp/news/articles/2105/07/news107.html -> "2021-05-07"
+# ITmedia系のサイトはURLに日付が含まれている
+parse_date_from_ITmedia_URL <- function(url){
+  yymm <- str_extract(url,"(?<=articles/)[0-9]{4}(?=/)")
+  y <- str_sub(yymm,1,2)
+  m <- str_sub(yymm,3,4)
+  d <- str_extract(url,"(?<=articles/[0-9]{4}/)[0-9]+(?=/)")
+  as.Date(str_c(y,m,d),format="%y%m%d")
+}
+
+# "2020-12-15"と"2021-05-08" -> c("2012","2101",...,"2105")
+seq_yymm <- function(start_date,end_date){
+  seq(floor_date(start_date,unit="month"),floor_date(end_date,unit="month"),by="1 month") %>% 
+    format("%y%m")
+}
