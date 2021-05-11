@@ -8,7 +8,7 @@ get_ITmedia_NEWS_articlelist <- function(yymm,UA){
   
   page <- session(url,user_agent(UA)) %>% 
     read_html()
-  res <- read_ITmedia_list_html(page,"ITmedia NEWS")
+  res <- read_ITmedia_articlelist_html(page,"ITmedia NEWS")
   return(res)
 }
 
@@ -17,34 +17,6 @@ get_ITmedia_NEWS_ranking <- function(UA){
   
   page <- session(url,user_agent(UA)) %>% 
     read_html()
-  tmp <- page %>% 
-    html_elements("div#Ranking") %>% 
-    html_elements("div.colBoxIndex")
-  
-  subtitle <- tmp %>% 
-    html_elements("div.colBoxSubTitle") %>% 
-    html_text(trim=TRUE) %>% 
-    if_else(.=="",NA_character_,.)
-  title <- tmp %>% 
-    html_elements("div.colBoxTitle") %>% 
-    html_elements("a") %>% 
-    html_text(trim=TRUE)
-  url <- tmp %>% 
-    html_elements("div.colBoxTitle") %>% 
-    html_elements("a") %>% 
-    html_attr("href")
-  date <- tmp %>% 
-    html_elements("div.colBoxInfo>span.colBoxDate") %>% 
-    html_text(trim=TRUE) %>% 
-    str_extract("[0-9]+年[0-9]+月[0-9]+日") %>% 
-    parse_date2()
-  
-  data.frame(
-    source="ITmedia NEWS",
-    date=date,
-    rank=1:length(title),
-    subtitle=subtitle,
-    title=title,
-    url=url
-  )
+  res <- read_ITmedia_ranking_html(page,"ITmedia NEWS")
+  return(res)
 }
