@@ -29,3 +29,38 @@ seq_yymm <- function(start_date,end_date){
   seq(floor_date(start_date,unit="month"),floor_date(end_date,unit="month"),by="1 month") %>% 
     format("%y%m")
 }
+
+# ITmediaのページは共通なので
+read_list_ITmedia_html <- function(page,source){
+  tmp <- page %>% 
+    html_elements("div.colBox.colBoxBacknumber>div.colBoxOuter>div.colBoxInner>div.colBoxIndex>div.colBoxUlist>ul>li")
+  
+  article_type <- tmp %>% 
+    html_elements("span.colBoxArticletype") %>% 
+    html_text(trim=TRUE)
+  title <- tmp %>% 
+    html_elements("a") %>%
+    html_text(trim=TRUE)
+  url <- tmp %>% 
+    html_elements("a") %>% 
+    html_attr("href") %>% 
+    str_c("https:",.)
+  writer <- tmp %>% 
+    html_elements("span.colBoxArticlewriter") %>% 
+    html_text(trim=TRUE) %>% 
+    str_extract("(?<=（).*(?=）)")
+  date <- tmp %>% 
+    html_elements("span.colBoxUlistDate") %>% 
+    html_text(trim=TRUE) %>% 
+    str_extract("[0-9]+年[0-9]+月[0-9]+日") %>% 
+    parse_date2()
+  
+  data.frame(
+    source=source,
+    date=date,
+    article_type=article_type,
+    title=title,
+    url=url,
+    writer=writer
+  )
+}

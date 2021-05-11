@@ -8,37 +8,8 @@ get_list_ITmedia_NEWS <- function(yymm,UA){
   
   page <- session(url,user_agent(UA)) %>% 
     read_html()
-  tmp <- page %>% 
-    html_elements("div.colBox.colBoxBacknumber>div.colBoxOuter>div.colBoxInner>div.colBoxIndex>div.colBoxUlist>ul>li")
-  
-  article_type <- tmp %>% 
-    html_elements("span.colBoxArticletype") %>% 
-    html_text(trim=TRUE)
-  title <- tmp %>% 
-    html_elements("a") %>%
-    html_text(trim=TRUE)
-  url <- tmp %>% 
-    html_elements("a") %>% 
-    html_attr("href") %>% 
-    str_c("https:",.)
-  writer <- tmp %>% 
-    html_elements("span.colBoxArticlewriter") %>% 
-    html_text(trim=TRUE) %>% 
-    str_extract("(?<=（).*(?=）)")
-  date <- tmp %>% 
-    html_elements("span.colBoxUlistDate") %>% 
-    html_text(trim=TRUE) %>% 
-    str_extract("[0-9]+年[0-9]+月[0-9]+日") %>% 
-    parse_date2()
-  
-  data.frame(
-    source="ITmedia NEWS",
-    date=date,
-    article_type=article_type,
-    title=title,
-    url=url,
-    writer=writer
-  )
+  res <- read_list_ITmedia_html(page,"ITmedia NEWS")
+  return(res)
 }
 
 get_ranking_ITmedia_NEWS <- function(UA){
