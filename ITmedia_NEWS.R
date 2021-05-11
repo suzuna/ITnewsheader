@@ -1,5 +1,5 @@
 # yymm:その月のトップページなら""（もしくはyymm）、あるいはyymm
-get_list_ITmedia_NEWS <- function(yymm,UA){
+get_ITmedia_NEWS_articlelist <- function(yymm,UA){
   if (yymm=="") {
     url <- "https://www.itmedia.co.jp/news/subtop/archive/"
   } else {
@@ -8,11 +8,11 @@ get_list_ITmedia_NEWS <- function(yymm,UA){
   
   page <- session(url,user_agent(UA)) %>% 
     read_html()
-  res <- read_list_ITmedia_html(page,"ITmedia NEWS")
+  res <- read_ITmedia_list_html(page,"ITmedia NEWS")
   return(res)
 }
 
-get_ranking_ITmedia_NEWS <- function(UA){
+get_ITmedia_NEWS_ranking <- function(UA){
   url <- "https://www.itmedia.co.jp/news/subtop/ranking/"
   
   page <- session(url,user_agent(UA)) %>% 

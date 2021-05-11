@@ -31,7 +31,7 @@ seq_yymm <- function(start_date,end_date){
 }
 
 # ITmediaのページは共通なので
-read_list_ITmedia_html <- function(page,source){
+read_ITmedia_list_html <- function(page,source){
   tmp <- page %>% 
     html_elements("div.colBox.colBoxBacknumber>div.colBoxOuter>div.colBoxInner>div.colBoxIndex>div.colBoxUlist>ul>li")
   
