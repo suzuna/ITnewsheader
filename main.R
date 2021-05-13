@@ -65,6 +65,39 @@ read_ITmedia_articlelist_html <- function(page,source){
   )
 }
 
+read_ITmedia_ranking_html <- function(page,source){
+  tmp <- page %>% 
+    html_elements("div#Ranking") %>% 
+    html_elements("div.colBoxIndex")
+  
+  subtitle <- tmp %>% 
+    html_elements("div.colBoxSubTitle") %>% 
+    html_text(trim=TRUE) %>% 
+    if_else(.=="",NA_character_,.)
+  title <- tmp %>% 
+    html_elements("div.colBoxTitle") %>% 
+    html_elements("a") %>% 
+    html_text(trim=TRUE)
+  url <- tmp %>% 
+    html_elements("div.colBoxTitle") %>% 
+    html_elements("a") %>% 
+    html_attr("href")
+  date <- tmp %>% 
+    html_elements("div.colBoxInfo>span.colBoxDate") %>% 
+    html_text(trim=TRUE) %>% 
+    str_extract("[0-9]+年[0-9]+月[0-9]+日") %>% 
+    parse_date2()
+  
+  data.frame(
+    source=source,
+    date=date,
+    rank=1:length(title),
+    subtitle=subtitle,
+    title=title,
+    url=url
+  )
+}
+
 read_netlabo_ranking_html <- function(page,source){
   tmp <- page %>% 
     html_elements("div.myBox.myBoxStandard.myBoxRanking.myBoxRankingMain") %>% 
