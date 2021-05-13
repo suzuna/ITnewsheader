@@ -65,35 +65,29 @@ read_ITmedia_articlelist_html <- function(page,source){
   )
 }
 
-# ITmediaのランキングページは共通なので
-read_ITmedia_ranking_html <- function(page,source){
+read_netlabo_ranking_html <- function(page,source){
   tmp <- page %>% 
-    html_elements("div#Ranking") %>% 
-    html_elements("div.colBoxIndex")
+    html_elements("div.myBox.myBoxStandard.myBoxRanking.myBoxRankingMain") %>% 
+    html_elements("div.myBoxR")
   
-  subtitle <- tmp %>% 
-    html_elements("div.colBoxSubTitle") %>% 
-    html_text(trim=TRUE) %>% 
-    if_else(.=="",NA_character_,.)
   title <- tmp %>% 
-    html_elements("div.colBoxTitle") %>% 
+    html_elements("h3.myBoxTitle") %>% 
     html_elements("a") %>% 
     html_text(trim=TRUE)
+  abstract <- tmp %>% 
+    html_elements("p.myBoxAbs") %>% 
+    html_text(trim=TRUE) %>% 
+    if_else(.=="",NA_character_,.)
   url <- tmp %>% 
-    html_elements("div.colBoxTitle") %>% 
+    html_elements("h3.myBoxTitle") %>% 
     html_elements("a") %>% 
     html_attr("href")
-  date <- tmp %>% 
-    html_elements("div.colBoxInfo>span.colBoxDate") %>% 
-    html_text(trim=TRUE) %>% 
-    str_extract("[0-9]+年[0-9]+月[0-9]+日") %>% 
-    parse_date2()
-  
+  date <- url %>% 
+    parse_date_from_ITmedia_URL()
   data.frame(
     source=source,
     date=date,
     rank=1:length(title),
-    subtitle=subtitle,
     title=title,
     url=url
   )
