@@ -12,17 +12,19 @@ get_atmarkit_articlelist <- function(yymm,UA){
   return(res)
 }
 
-# read_linesを使う以上UAの指定はできない
-get_atmarkit_ranking <- function(){
-  url <- "https://www.atmarkit.co.jp/json/ait/rss_rankindex_all_day.json"
-  tmp <- read_lines(url,locale=locale(encoding="Shift-JIS"))
+get_atmarkit_ranking <- function(category,UA){
+  url <- str_glue("https://www.atmarkit.co.jp/json/ait/rss_rankindex_{category}_day.json")
+  tmp <- GET(url,user_agent(UA)) %>% 
+    content("text",encoding="Shift-JIS")
   title <- tmp %>% 
     str_subset("'title':") %>%
-    str_extract("(?<='title':').*(?=',)") %>%
+    str_extract_all("(?<='title':').*(?=',)") %>%
+    .[[1]] %>% 
     str_trim(side="both")
   url <- tmp %>% 
     str_subset("'link':") %>%
-    str_extract("(?<='link':').*(?=',)")
+    str_extract_all("(?<='link':').*(?=',)") %>% 
+    .[[1]]
   date <- url %>% 
     parse_date_from_ITmedia_URL()
   res <- data.frame(
