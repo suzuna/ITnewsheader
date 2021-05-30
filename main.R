@@ -4,9 +4,8 @@ library(rvest)
 library(httr)
 library(rlist)
 
-USER_AGENT <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
-SLEEP_TIME <- 1
 
+# 関数を定義する -----------------------------------------------------------------
 # 2021年5月8日 -> "2021-05-08"(date)
 # as.Date(format=...)は、leading spaceのないmonth（例：5月）をパースできない
 parse_date2 <- function(str){
@@ -141,6 +140,18 @@ make_table_for_report <- function(df,format="DT"){
   }
   df %>% 
     mutate(date=as.character(date,format="%Y/%m/%d")) %>% 
-    select(date,title_with_link) %>% 
-    set_names(NULL)
+    select(date,title_with_link)
 }
+
+
+# 定数 ----------------------------------------------------------------------
+USER_AGENT <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
+SLEEP_TIME <- 1
+MONTH_NUM <- 3
+NIKKEI_XTECH_PAGES <- 10
+YYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%y%m") %>% 
+  tail(MONTH_NUM) %>% 
+  rev()
+YYYYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%Y%m") %>% 
+  tail(MONTH_NUM) %>% 
+  rev()
