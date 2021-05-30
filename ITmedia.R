@@ -1,5 +1,5 @@
 # yymm:その月のトップページなら""（もしくはyymm）、あるいはyymm
-get_ITmedia_articlelist <- function(yymm,UA){
+get_ITmedia_articlelist <- function(UA){
   url <- "https://www.itmedia.co.jp/"
   
   page <- session(url,user_agent(UA)) %>% 
