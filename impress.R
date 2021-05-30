@@ -1,4 +1,4 @@
-get_impress_articlelist <- function(category,yyyymm=format(Sys.Date(),"%Y%m"),UA){
+get_impress_articlelist <- function(category,yyyymm=format(Sys.Date(),"%Y%m"),UA,sleep_time){
   if (category=="top"){
     url <- str_glue("https://watch.impress.co.jp/backno/top/index{yyyymm}.html")
   } else {
@@ -70,10 +70,11 @@ get_impress_articlelist <- function(category,yyyymm=format(Sys.Date(),"%Y%m"),UA
     ) %>% 
       unnest(c(title,url))
   }
+  Sys.sleep(sleep_time)
   return(res)
 }
 
-get_impress_ranking <- function(category,UA){
+get_impress_ranking <- function(category,UA,sleep_time){
   category2 <- case_when(
     # クラウドはランキングがない
     category=="top" ~ "watch",
@@ -100,5 +101,6 @@ get_impress_ranking <- function(category,UA){
     mutate(title=str_remove_all(title," *<br> *")) %>% 
     mutate(source=str_glue("impress_{category}"),date=NA) %>% 
     relocate(source,date,title,url)
+  Sys.sleep(sleep_time)
   return(res)
 }

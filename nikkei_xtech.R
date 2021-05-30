@@ -1,4 +1,4 @@
-get_nikkei_xtech_articlelist <- function(p,UA){
+get_nikkei_xtech_articlelist <- function(p,UA,sleep_time){
   url <- str_glue("https://xtech.nikkei.com/top/latest.html?bn=news&M=50&P={p}")
   
   page <- session(url,user_agent(UA)) %>% 
@@ -27,10 +27,11 @@ get_nikkei_xtech_articlelist <- function(p,UA){
     title=title,
     url=url
   )
+  Sys.sleep(sleep_time)
   return(res)
 }
 
-get_nikkei_xtech_ranking <- function(UA){
+get_nikkei_xtech_ranking <- function(UA,sleep_time){
   url <- "https://xtech.nikkei.com/ranking/"
   
   page <- session(url,user_agent(UA)) %>% 
@@ -56,5 +57,6 @@ get_nikkei_xtech_ranking <- function(UA){
     title=title,
     url=url
   )
+  Sys.sleep(sleep_time)
   return(res)
 }

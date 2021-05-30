@@ -1,5 +1,5 @@
 # category:"https://ascii.jp/archive/top/202105/"の"top"
-get_ascii_articlelist <- function(category="top",yyyymm=format(Sys.Date(),"%Y%m"),UA){
+get_ascii_articlelist <- function(category="top",yyyymm=format(Sys.Date(),"%Y%m"),UA,sleep_time){
   url <- str_glue("https://ascii.jp/archive/{category}/{yyyymm}/")
   
   page <- session(url,user_agent(UA)) %>% 
@@ -27,5 +27,6 @@ get_ascii_articlelist <- function(category="top",yyyymm=format(Sys.Date(),"%Y%m"
     url=url
   ) %>% 
     unnest(c(title,url))
+  Sys.sleep(sleep_time)
   return(res)
 }

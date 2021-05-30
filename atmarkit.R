@@ -1,5 +1,5 @@
 # yymm:その月のトップページなら""（もしくはyymm）、あるいはyymm
-get_atmarkit_articlelist <- function(yymm,UA){
+get_atmarkit_articlelist <- function(yymm,UA,sleep_time){
   if (yymm=="") {
     url <- "https://www.atmarkit.co.jp/ait/subtop/archive/"
   } else {
@@ -9,10 +9,11 @@ get_atmarkit_articlelist <- function(yymm,UA){
   page <- session(url,user_agent(UA)) %>% 
     read_html(encoding="Shift-JIS")
   res <- read_ITmedia_articlelist_html(page,"atmarkit")
+  Sys.sleep(sleep_time)
   return(res)
 }
 
-get_atmarkit_ranking <- function(category,UA){
+get_atmarkit_ranking <- function(category,UA,sleep_time){
   url <- str_glue("https://www.atmarkit.co.jp/json/ait/rss_rankindex_{category}_day.json")
   tmp <- GET(url,user_agent(UA)) %>% 
     content("text",encoding="Shift-JIS")
@@ -35,5 +36,6 @@ get_atmarkit_ranking <- function(category,UA){
     url=url,
     writer=NA_character_
   )
+  Sys.sleep(sleep_time)
   return(res)
 }

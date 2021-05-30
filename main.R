@@ -5,6 +5,7 @@ library(httr)
 library(rlist)
 
 USER_AGENT <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
+SLEEP_TIME <- 1
 
 # 2021年5月8日 -> "2021-05-08"(date)
 # as.Date(format=...)は、leading spaceのないmonth（例：5月）をパースできない
@@ -26,9 +27,10 @@ parse_date_from_ITmedia_URL <- function(url){
 }
 
 # "2020-12-15"と"2021-05-08" -> c("2012","2101",...,"2105")
-seq_yymm <- function(start_date,end_date){
+#' @param format: "yymm" or "yyyymm"
+create_seq_yymm <- function(start_date,end_date,format){
   seq(floor_date(start_date,unit="month"),floor_date(end_date,unit="month"),by="1 month") %>% 
-    format("%y%m")
+    format(format)
 }
 
 # ITmediaの一覧ページは共通なので
@@ -125,4 +127,20 @@ read_netlabo_ranking_html <- function(page,source){
     title=title,
     url=url
   )
+}
+
+# title列とurl列を持つdata.frameにおいて、urlをリンクにしたtitle列を作る
+#' @param df: "title"と"url"を列名に持つdata.frame
+make_table_for_report <- function(df,format="DT"){
+  if (format=="DT"){
+    df <- df %>% 
+      mutate(title_with_link=str_glue("<a href='{url}' target='_blank' rel='noopener noreferrer'>{title}</a>"))
+  } else if (format=="kable"){
+    df <- df %>% 
+      mutate(title_with_link=str_glue("[{title}]({url})"))
+  }
+  df %>% 
+    mutate(date=as.character(date,format="%Y/%m/%d")) %>% 
+    select(date,title_with_link) %>% 
+    set_names(NULL)
 }
