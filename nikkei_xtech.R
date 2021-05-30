@@ -2,7 +2,7 @@ get_nikkei_xtech_articlelist <- function(p,UA){
   url <- str_glue("https://xtech.nikkei.com/top/latest.html?bn=news&M=50&P={p}")
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="UTF-8")
   tmp <- page %>% 
     html_elements("article.l-main_primary") %>% 
     html_elements("li.p-articleList_item>a.p-articleList_item_link")
@@ -34,7 +34,7 @@ get_nikkei_xtech_ranking <- function(UA){
   url <- "https://xtech.nikkei.com/ranking/"
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="UTF-8")
   tmp <- page %>% 
     html_elements("div#categoryTabToday>ul.p-articleRankList>li.p-articleRankList_item")
   

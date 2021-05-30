@@ -7,7 +7,7 @@ get_atmarkit_articlelist <- function(yymm,UA){
   }
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   res <- read_ITmedia_articlelist_html(page,"atmarkit")
   return(res)
 }

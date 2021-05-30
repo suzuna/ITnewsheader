@@ -3,7 +3,7 @@ get_ITmedia_articlelist <- function(yymm,UA){
   url <- "https://www.itmedia.co.jp/"
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   tmp <- page %>% 
     html_elements("div.colBoxTab2#colBoxTopStoriesBacknum")
   
@@ -29,7 +29,7 @@ get_ITmedia_ranking <- function(UA){
   url <- "https://www.itmedia.co.jp/ranking/"
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   
   # 1位-10位
   tmp1 <- page %>% 

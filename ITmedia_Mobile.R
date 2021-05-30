@@ -7,7 +7,7 @@ get_ITmedia_Mobile_articlelist <- function(yymm,UA){
   }
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   res <- read_ITmedia_articlelist_html(page,"ITmedia Mobile")
   return(res)
 }
@@ -16,7 +16,7 @@ get_ITmedia_Mobile_ranking <- function(UA){
   url <- "https://www.itmedia.co.jp/mobile/subtop/ranking/"
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   res <- read_ITmedia_ranking_html(page,"ITmedia Mobile")
   return(res)
 }

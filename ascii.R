@@ -3,7 +3,7 @@ get_ascii_articlelist <- function(category="top",yyyymm=format(Sys.Date(),"%Y%m"
   url <- str_glue("https://ascii.jp/archive/{category}/{yyyymm}/")
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="UTF-8")
   tmp <- page %>% 
     html_elements("div.archives")
   

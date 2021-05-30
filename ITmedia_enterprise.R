@@ -7,7 +7,7 @@ get_ITmedia_enterprise_articlelist <- function(yymm,UA){
   }
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   res <- read_ITmedia_articlelist_html(page,"ITmedia エンタープライズ")
   return(res)
 }
@@ -16,7 +16,7 @@ get_ITmedia_enterprise_ranking <- function(UA){
   url <- "https://www.itmedia.co.jp/enterprise/subtop/ranking/index.html"
   
   page <- session(url,user_agent(UA)) %>% 
-    read_html()
+    read_html(encoding="Shift-JIS")
   res <- read_ITmedia_ranking_html(page,"ITmedia エンタープライズ")
   return(res)
 }
