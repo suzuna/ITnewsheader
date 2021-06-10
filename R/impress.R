@@ -1,3 +1,10 @@
+#' @param category: character.
+#' トップページ("https://watch.impress.co.jp/backno/top/index{yyyymm}.html")の場合は"top",
+#' "https://{category}.watch.impress.co.jp/backno/top/index{yyyymm}.html"の場合は{category}
+#' @param yyyymm: character. 取得したい記事のyyyymm
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_impress_articlelist <- function(category,yyyymm=format(Sys.Date(),"%Y%m"),UA,sleep_time){
   if (category=="top"){
     url <- str_glue("https://watch.impress.co.jp/backno/top/index{yyyymm}.html")
@@ -74,6 +81,11 @@ get_impress_articlelist <- function(category,yyyymm=format(Sys.Date(),"%Y%m"),UA
   return(res)
 }
 
+
+#' @param category: character.
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_impress_ranking <- function(category,UA,sleep_time){
   category2 <- case_when(
     # クラウドはランキングがない
