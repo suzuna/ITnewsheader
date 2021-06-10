@@ -12,7 +12,11 @@ knitr::opts_chunk$set(echo=TRUE,include=TRUE,message=FALSE,warning=FALSE,error=F
 ```
 
 ```{r read_script,include=FALSE}
-walk(list.files(".",pattern=".R$",recursive=TRUE,full.names=TRUE),source,encoding="UTF-8")
+library(Hmisc)
+library(DT)
+
+# render.Rは読み込まない（無限に循環してしまう）ので、render.Rは"./R"には置かない
+walk(list.files("./R",pattern=".R$",recursive=TRUE,full.names=TRUE),source,encoding="UTF-8")
 ```
 
 ```{r get_data,include=FALSE}
@@ -54,7 +58,7 @@ data <- Hmisc::llist(
 
 ### ITmedia
 
-`r nrow(data$ITmedia)` entries
+`r nrow(data$ITmedia)` entries (`r str_glue("{last(data$ITmedia$datetime)} - {first(data$ITmedia$datetime)}")`)
 
 ```{r ITmedia,echo=FALSE}
 DT::datatable(data$ITmedia,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -63,7 +67,7 @@ DT::datatable(data$ITmedia,class="nowrap",colnames="",rownames=FALSE,escape=FALS
 
 ### ITmedia_news
 
-`r nrow(data$ITmedia_news)` entries
+`r nrow(data$ITmedia_news)` entries (`r str_glue("{last(data$ITmedia_news$datetime)} - {first(data$ITmedia_news$datetime)}")`)
 
 ```{r ITmedia_news,echo=FALSE}
 DT::datatable(data$ITmedia_news,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -72,7 +76,7 @@ DT::datatable(data$ITmedia_news,class="nowrap",colnames="",rownames=FALSE,escape
 
 ### ITmedia_pcuser
 
-`r nrow(data$ITmedia_pcuser)` entries
+`r nrow(data$ITmedia_pcuser)` entries (`r str_glue("{last(data$ITmedia_pcuser$datetime)} - {first(data$ITmedia_pcuser$datetime)}")`)
 
 ```{r ITmedia_pcuser,echo=FALSE}
 DT::datatable(data$ITmedia_pcuser,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -81,7 +85,7 @@ DT::datatable(data$ITmedia_pcuser,class="nowrap",colnames="",rownames=FALSE,esca
 
 ### ITmedia_enterprise
 
-`r nrow(data$ITmedia_enterprise)` entries
+`r nrow(data$ITmedia_enterprise)` entries (`r str_glue("{last(data$ITmedia_enterprise$datetime)} - {first(data$ITmedia_enterprise$datetime)}")`)
 
 ```{r ITmedia_enterprise,echo=FALSE}
 DT::datatable(data$ITmedia_enterprise,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -90,7 +94,7 @@ DT::datatable(data$ITmedia_enterprise,class="nowrap",colnames="",rownames=FALSE,
 
 ### ITmedia_mobile
 
-`r nrow(data$ITmedia_mobile)` entries
+`r nrow(data$ITmedia_mobile)` entries (`r str_glue("{last(data$ITmedia_mobile$datetime)} - {first(data$ITmedia_mobile$datetime)}")`)
 
 ```{r ITmedia_mobile,echo=FALSE}
 DT::datatable(data$ITmedia_mobile,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -99,7 +103,7 @@ DT::datatable(data$ITmedia_mobile,class="nowrap",colnames="",rownames=FALSE,esca
 
 ### ITmedia_business
 
-`r nrow(data$ITmedia_business)` entries
+`r nrow(data$ITmedia_business)` entries (`r str_glue("{last(data$ITmedia_business$datetime)} - {first(data$ITmedia_business$datetime)}")`)
 
 ```{r ITmedia_business,echo=FALSE}
 DT::datatable(data$ITmedia_business,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -108,7 +112,7 @@ DT::datatable(data$ITmedia_business,class="nowrap",colnames="",rownames=FALSE,es
 
 ### atmarkit
 
-`r nrow(data$atmarkit)` entries
+`r nrow(data$atmarkit)` entries (`r str_glue("{last(data$atmarkit$datetime)} - {first(data$atmarkit$datetime)}")`)
 
 ```{r atmarkit,echo=FALSE}
 DT::datatable(data$atmarkit,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -117,7 +121,7 @@ DT::datatable(data$atmarkit,class="nowrap",colnames="",rownames=FALSE,escape=FAL
 
 ### netlabo
 
-`r nrow(data$netlabo)` entries
+`r nrow(data$netlabo)` entries (`r str_glue("{last(data$netlabo$datetime)} - {first(data$netlabo$datetime)}")`)
 
 ```{r netlabo,echo=FALSE}
 DT::datatable(data$netlabo,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -126,7 +130,7 @@ DT::datatable(data$netlabo,class="nowrap",colnames="",rownames=FALSE,escape=FALS
 
 ### nikkei_xtech
 
-`r nrow(data$nikkei_xtech)` entries
+`r nrow(data$nikkei_xtech)` entries (`r str_glue("{last(data$nikkei_xtech$datetime)} - {first(data$nikkei_xtech$datetime)}")`)
 
 ```{r nikkei_xtech,echo=FALSE}
 DT::datatable(data$nikkei_xtech,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -135,7 +139,7 @@ DT::datatable(data$nikkei_xtech,class="nowrap",colnames="",rownames=FALSE,escape
 
 ### ascii
 
-`r nrow(data$ascii)` entries
+`r nrow(data$ascii)` entries (`r str_glue("{last(data$ascii$datetime)} - {first(data$ascii$datetime)}")`)
 
 ```{r ascii,echo=FALSE}
 DT::datatable(data$ascii,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -144,7 +148,7 @@ DT::datatable(data$ascii,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
 
 ### ascii_ai
 
-`r nrow(data$ascii_ai)` entries
+`r nrow(data$ascii_ai)` entries (`r str_glue("{last(data$ascii_ai$datetime)} - {first(data$ascii_ai$datetime)}")`)
 
 ```{r ascii_ai,echo=FALSE}
 DT::datatable(data$ascii_ai,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -153,7 +157,7 @@ DT::datatable(data$ascii_ai,class="nowrap",colnames="",rownames=FALSE,escape=FAL
 
 ### ascii_biz
 
-`r nrow(data$ascii_biz)` entries
+`r nrow(data$ascii_biz)` entries (`r str_glue("{last(data$ascii_biz$datetime)} - {first(data$ascii_biz$datetime)}")`)
 
 ```{r ascii_biz,echo=FALSE}
 DT::datatable(data$ascii_biz,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -162,7 +166,7 @@ DT::datatable(data$ascii_biz,class="nowrap",colnames="",rownames=FALSE,escape=FA
 
 ### ascii_tech
 
-`r nrow(data$ascii_tech)` entries
+`r nrow(data$ascii_tech)` entries (`r str_glue("{last(data$ascii_tech$datetime)} - {first(data$ascii_tech$datetime)}")`)
 
 ```{r ascii_tech,echo=FALSE}
 DT::datatable(data$ascii_tech,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -171,7 +175,7 @@ DT::datatable(data$ascii_tech,class="nowrap",colnames="",rownames=FALSE,escape=F
 
 ### ascii_akiba
 
-`r nrow(data$ascii_akiba)` entries
+`r nrow(data$ascii_akiba)` entries (`r str_glue("{last(data$ascii_akiba$datetime)} - {first(data$ascii_akiba$datetime)}")`)
 
 ```{r ascii_akiba,echo=FALSE}
 DT::datatable(data$ascii_akiba,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -180,7 +184,7 @@ DT::datatable(data$ascii_akiba,class="nowrap",colnames="",rownames=FALSE,escape=
 
 ### impress
 
-`r nrow(data$impress)` entries
+`r nrow(data$impress)` entries (`r str_glue("{last(data$impress$datetime)} - {first(data$impress$datetime)}")`)
 
 ```{r impress,echo=FALSE}
 DT::datatable(data$impress,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -189,7 +193,7 @@ DT::datatable(data$impress,class="nowrap",colnames="",rownames=FALSE,escape=FALS
 
 ### impress_internet
 
-`r nrow(data$impress_internet)` entries
+`r nrow(data$impress_internet)` entries (`r str_glue("{last(data$impress_internet$datetime)} - {first(data$impress_internet$datetime)}")`)
 
 ```{r impress_internet,echo=FALSE}
 DT::datatable(data$impress_internet,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -198,7 +202,7 @@ DT::datatable(data$impress_internet,class="nowrap",colnames="",rownames=FALSE,es
 
 ### impress_pc
 
-`r nrow(data$impress_pc)` entries
+`r nrow(data$impress_pc)` entries (`r str_glue("{last(data$impress_pc$datetime)} - {first(data$impress_pc$datetime)}")`)
 
 ```{r impress_pc,echo=FALSE}
 DT::datatable(data$impress_pc,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -207,7 +211,7 @@ DT::datatable(data$impress_pc,class="nowrap",colnames="",rownames=FALSE,escape=F
 
 ### impress_akiba
 
-`r nrow(data$impress_akiba)` entries
+`r nrow(data$impress_akiba)` entries (`r str_glue("{last(data$impress_akiba$datetime)} - {first(data$impress_akiba$datetime)}")`)
 
 ```{r impress_akiba,echo=FALSE}
 DT::datatable(data$impress_akiba,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -216,7 +220,7 @@ DT::datatable(data$impress_akiba,class="nowrap",colnames="",rownames=FALSE,escap
 
 ### impress_ktai
 
-`r nrow(data$impress_ktai)` entries
+`r nrow(data$impress_ktai)` entries (`r str_glue("{last(data$impress_ktai$datetime)} - {first(data$impress_ktai$datetime)}")`)
 
 ```{r impress_ktai,echo=FALSE}
 DT::datatable(data$impress_ktai,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -225,7 +229,7 @@ DT::datatable(data$impress_ktai,class="nowrap",colnames="",rownames=FALSE,escape
 
 ### impress_cloud
 
-`r nrow(data$impress_cloud)` entries
+`r nrow(data$impress_cloud)` entries (`r str_glue("{last(data$impress_cloud$datetime)} - {first(data$impress_cloud$datetime)}")`)
 
 ```{r impress_cloud,echo=FALSE}
 DT::datatable(data$impress_cloud,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
@@ -234,7 +238,7 @@ DT::datatable(data$impress_cloud,class="nowrap",colnames="",rownames=FALSE,escap
 
 ### impress_hobby
 
-`r nrow(data$impress_hobby)` entries
+`r nrow(data$impress_hobby)` entries (`r str_glue("{last(data$impress_hobby$datetime)} - {first(data$impress_hobby$datetime)}")`)
 
 ```{r impress_hobby,echo=FALSE}
 DT::datatable(data$impress_hobby,class="nowrap",colnames="",rownames=FALSE,escape=FALSE,
