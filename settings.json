@@ -1,0 +1,19 @@
+{
+  "general": {
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
+  },
+  "articles": {
+    "ITmedia": {
+      "month_num": 3
+    },
+    "nikkei_xtech": {
+      "p_num": 10
+    },
+    "ascii": {
+      "month_num": 3
+    },
+    "impress": {
+      "month_num": 3
+    }
+  }
+}

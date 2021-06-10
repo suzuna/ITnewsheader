@@ -3,6 +3,7 @@ library(lubridate)
 library(rvest)
 library(httr)
 library(rlist)
+library(jsonlite)
 
 
 # 関数を定義する -----------------------------------------------------------------
@@ -145,13 +146,22 @@ make_table_for_report <- function(df,format="DT"){
 
 
 # 定数 ----------------------------------------------------------------------
-USER_AGENT <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
 SLEEP_TIME <- 1
-MONTH_NUM <- 3
-NIKKEI_XTECH_PAGES <- 10
-YYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%y%m") %>% 
-  tail(MONTH_NUM) %>% 
+
+settings <- fromJSON("settings.json")
+USER_AGENT <- settings$general$user_agent
+
+ITMEDIA_MONTH_NUM <- settings$articles$ITmedia$month_num
+NIKKEI_XTECH_PAGES <- settings$articles$nikkei_xtech$p_num
+ASCII_MONTH_NUM <- settings$articles$ascii$month_num
+IMPRESS_MONTH_NUM <- settings$articles$impress$month_num
+
+ITMEDIA_YYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%y%m") %>% 
+  tail(ITMEDIA_MONTH_NUM) %>% 
   rev()
-YYYYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%Y%m") %>% 
-  tail(MONTH_NUM) %>% 
+ASCII_YYYYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%Y%m") %>% 
+  tail(ASCII_MONTH_NUM) %>% 
+  rev()
+IMPRESS_YYYYMM <- create_seq_yymm(Sys.Date()-days(365),Sys.Date(),format="%Y%m") %>% 
+  tail(IMPRESS_MONTH_NUM) %>% 
   rev()
