@@ -1,4 +1,7 @@
-# yymm:その月のトップページなら""（もしくはyymm）、あるいはyymm
+#' @param yymm: character. 取得したい記事のyymm
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_atmarkit_articlelist <- function(yymm,UA,sleep_time){
   if (yymm=="") {
     url <- "https://www.atmarkit.co.jp/ait/subtop/archive/"
@@ -13,6 +16,11 @@ get_atmarkit_articlelist <- function(yymm,UA,sleep_time){
   return(res)
 }
 
+
+#' @param category: character. "https://www.atmarkit.co.jp/json/ait/rss_rankindex_{category}_day.json"のcategory
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_atmarkit_ranking <- function(category,UA,sleep_time){
   url <- str_glue("https://www.atmarkit.co.jp/json/ait/rss_rankindex_{category}_day.json")
   tmp <- GET(url,user_agent(UA)) %>% 

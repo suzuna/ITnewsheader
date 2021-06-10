@@ -1,4 +1,6 @@
-# yymm:その月のトップページなら""（もしくはyymm）、あるいはyymm
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_ITmedia_articlelist <- function(UA,sleep_time){
   url <- "https://www.itmedia.co.jp/"
   
@@ -26,6 +28,10 @@ get_ITmedia_articlelist <- function(UA,sleep_time){
   return(res)
 }
 
+
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_ITmedia_ranking <- function(UA,sleep_time){
   url <- "https://www.itmedia.co.jp/ranking/"
   

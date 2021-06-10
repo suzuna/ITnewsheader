@@ -1,4 +1,9 @@
 # category:"https://ascii.jp/archive/top/202105/"の"top"
+#' @param category: character. "https://ascii.jp/archive/{category}/{yyyymm}/"の{category}
+#' @param yyyymm: character. 取得したい記事のyyyymm
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_ascii_articlelist <- function(category="top",yyyymm=format(Sys.Date(),"%Y%m"),UA,sleep_time){
   url <- str_glue("https://ascii.jp/archive/{category}/{yyyymm}/")
   
