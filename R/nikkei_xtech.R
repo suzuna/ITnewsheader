@@ -1,3 +1,7 @@
+#' @param p: numeric. 取得するページ番号（1ページ50件）
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_nikkei_xtech_articlelist <- function(p,UA,sleep_time){
   url <- str_glue("https://xtech.nikkei.com/top/latest.html?bn=news&M=50&P={p}")
   
@@ -31,6 +35,10 @@ get_nikkei_xtech_articlelist <- function(p,UA,sleep_time){
   return(res)
 }
 
+
+#' @param UA: character. user_agent
+#' @param sleep_time: numeric.
+#' @return data.frame.
 get_nikkei_xtech_ranking <- function(UA,sleep_time){
   url <- "https://xtech.nikkei.com/ranking/"
   
