@@ -164,7 +164,6 @@ make_table_for_report <- function(df,format="DT"){
       mutate(title_with_link=str_glue("[{title}]({url})"))
   }
   df %>% 
-    mutate(date=as.character(date,format="%Y/%m/%d")) %>% 
     select(date,title_with_link)
 }
 
