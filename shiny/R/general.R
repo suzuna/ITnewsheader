@@ -59,8 +59,9 @@ read_ITmedia_articlelist_html <- function(page,source){
     html_text(trim=TRUE)
   url <- tmp %>% 
     html_elements("a") %>% 
-    html_attr("href") %>% 
-    str_c("https:",.)
+    html_attr("href")
+  # URLは、2021/07までは//www.itmediaで始まり、2021/08以降はhttps://が付いている
+  url <- if_else(str_detect(url,"https:",negate=TRUE),str_c("https:",url),url)
   writer <- tmp %>% 
     html_elements("span.colBoxArticlewriter") %>% 
     html_text(trim=TRUE) %>% 
